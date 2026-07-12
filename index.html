@@ -177,6 +177,50 @@
     max-width: 40rem;
   }
 
+  /* Timeline */
+  .timeline {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.4rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .timeline-item.in-view { opacity: 1; transform: translateY(0); }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.6rem;
+    top: 0.4rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .timeline-year {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+  .timeline-desc {
+    color: var(--sub);
+    font-size: 1rem;
+  }
+
   /* Work grid */
   .work-grid {
     max-width: 1100px;
@@ -305,6 +349,7 @@
   <nav>
     <a class="logo" href="#home">JYVP</a>
     <div class="links">
+      <a href="#history">History</a>
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
@@ -313,13 +358,36 @@
   </nav>
 
   <section class="hero" id="home">
-    <h1>Creative Engineer.<br>Problem Solver.</h1>
-    <p>미니멀함 속에 담긴 디테일. 코드와 디자인의 경계에서 아이디어를 만듭니다.</p>
+    <h1>추세 추종<br>주식 투자자</h1>
+    <p>데이터와 추세를 따라 시장을 읽습니다.</p>
     <div class="cta-row">
       <a class="btn-primary" href="http://jyvp.iptime.org:8890/">사이트 방문하기</a>
-      <a class="link-arrow" href="#work">프로젝트 보기 →</a>
+      <a class="link-arrow" href="#history">이력 보기 →</a>
     </div>
     <div class="scroll-hint"><span></span></div>
+  </section>
+
+  <section id="history">
+    <div class="eyebrow fade-in">History</div>
+    <h2 class="section-title fade-in">연도별 이력</h2>
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="timeline-year">1995</div>
+        <div class="timeline-desc">한양대학교 전자공학과</div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-year">2000</div>
+        <div class="timeline-desc">한양대학교 전자공학과 대학원 입학</div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-year">2002 – 2005</div>
+        <div class="timeline-desc">전문연구요원</div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-year">2005</div>
+        <div class="timeline-desc">LG전자 입사</div>
+      </div>
+    </div>
   </section>
 
   <section id="work">
@@ -401,7 +469,7 @@
   </footer>
 
   <script>
-    var els = document.querySelectorAll('.fade-in, .card');
+    var els = document.querySelectorAll('.fade-in, .card, .timeline-item');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
