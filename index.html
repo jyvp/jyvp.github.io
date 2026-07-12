@@ -2,59 +2,28 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=http://jyvp.iptime.org:8890/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>jyvp</title>
 <style>
   html, body {
     margin: 0;
-    padding: 0;
     height: 100%;
-    overflow: hidden;
-  }
-  #content-frame {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    border: 0;
-  }
-  #fallback {
-    display: none;
-    box-sizing: border-box;
-    height: 100vh;
-    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: system-ui, -apple-system, sans-serif;
     text-align: center;
   }
-  #fallback a {
-    color: #0969da;
-  }
+  a { color: #0969da; }
 </style>
 </head>
 <body>
-  <iframe id="content-frame" src="http://jyvp.iptime.org:8890/" title="jyvp"></iframe>
-
-  <div id="fallback">
-    <p>이 브라우저에서는 콘텐츠를 embed 표시할 수 없습니다 (브라우저의 mixed-content 정책으로 차단되었을 수 있습니다).</p>
-    <p><a href="http://jyvp.iptime.org:8890/">http://jyvp.iptime.org:8890/ 로 직접 이동</a></p>
-  </div>
-
+  <p>이동 중입니다&hellip; 자동으로 이동하지 않으면
+    <a href="http://jyvp.iptime.org:8890/">여기를 클릭하세요</a>.
+  </p>
   <script>
-    var frame = document.getElementById('content-frame');
-    var fallback = document.getElementById('fallback');
-    var loaded = false;
-
-    frame.addEventListener('load', function () {
-      loaded = true;
-    });
-
-    // Mixed-content blocks (HTTPS page embedding an HTTP iframe) fail silently,
-    // without firing an error event, so detect the block via a timeout instead.
-    setTimeout(function () {
-      if (!loaded) {
-        frame.style.display = 'none';
-        fallback.style.display = 'block';
-      }
-    }, 3000);
+    window.location.replace("http://jyvp.iptime.org:8890/");
   </script>
 </body>
 </html>
