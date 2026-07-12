@@ -2,28 +2,415 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=http://jyvp.iptime.org:8890/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>jyvp</title>
+<title>JYVP</title>
 <style>
-  html, body {
+  :root {
+    --bg: #ffffff;
+    --fg: #1d1d1f;
+    --sub: #6e6e73;
+    --accent: #0071e3;
+    --card-bg: #f5f5f7;
+    --border: rgba(0, 0, 0, 0.08);
+    --nav-bg: rgba(255, 255, 255, 0.7);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --fg: #f5f5f7;
+      --sub: #a1a1a6;
+      --accent: #2997ff;
+      --card-bg: #111114;
+      --border: rgba(255, 255, 255, 0.1);
+      --nav-bg: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
     margin: 0;
-    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+      "Segoe UI", "Helvetica Neue", Arial, "Apple SD Gothic Neo",
+      "Malgun Gothic", sans-serif;
+  }
+
+  a { color: inherit; }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .logo {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  nav .links {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.82rem;
+    color: var(--sub);
+  }
+  nav .links a { text-decoration: none; transition: color 0.2s ease; }
+  nav .links a:hover { color: var(--fg); }
+  @media (max-width: 768px) { nav .links { display: none; } }
+
+  nav .visit {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 980px;
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* Hero */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 1.5rem;
+    position: relative;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero p {
+    margin: 1.5rem 0 2.5rem;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    color: var(--sub);
+    max-width: 34rem;
+    line-height: 1.5;
+  }
+  .hero .cta-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: system-ui, -apple-system, sans-serif;
-    text-align: center;
+    gap: 1.75rem;
+    flex-wrap: wrap;
   }
-  a { color: #0969da; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 0.9rem 2.25rem;
+    border-radius: 980px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: scale(1.03); }
+  .link-arrow {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 1.05rem;
+  }
+  .link-arrow:hover { text-decoration: underline; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px; height: 38px;
+    border: 2px solid var(--fg);
+    border-radius: 999px;
+    opacity: 0.35;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+  .scroll-hint span {
+    width: 4px; height: 8px;
+    border-radius: 999px;
+    background: var(--fg);
+    animation: scrollhint 1.6s ease-in-out infinite;
+  }
+  @keyframes scrollhint {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(10px); opacity: 0; }
+  }
+
+  section { padding: 6rem 1.5rem; }
+
+  .eyebrow {
+    text-align: center;
+    color: var(--sub);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 auto 3.5rem;
+    max-width: 40rem;
+  }
+
+  /* Work grid */
+  .work-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 768px) { .work-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .card.in-view { opacity: 1; transform: translateY(0); }
+  .card .cat {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.8;
+    margin-bottom: 0.35rem;
+  }
+  .card .title { font-size: 1.5rem; font-weight: 600; }
+
+  .card.c1 { background: linear-gradient(135deg, #2b5876, #4e4376); }
+  .card.c2 { background: linear-gradient(135deg, #11998e, #38ef7d); }
+  .card.c3 { background: linear-gradient(135deg, #ee0979, #ff6a00); }
+  .card.c4 { background: linear-gradient(135deg, #1d2b64, #f8cdda); }
+  .card.c5 { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+  .card.c6 { background: linear-gradient(135deg, #ff512f, #dd2476); }
+
+  /* Statement sections */
+  .statement {
+    text-align: center;
+    padding: 8rem 1.5rem;
+  }
+  .statement.dark { background: #000; color: #fff; }
+  .statement.light { background: var(--card-bg); color: var(--fg); }
+  .statement h2 {
+    font-size: clamp(1.9rem, 5vw, 3.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    max-width: 46rem;
+    margin: 0 auto 1.5rem;
+  }
+  .statement p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    max-width: 34rem;
+    margin: 0 auto;
+    opacity: 0.7;
+    line-height: 1.6;
+  }
+
+  /* Closing CTA */
+  .closing {
+    text-align: center;
+    padding: 7rem 1.5rem;
+  }
+  .closing h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    margin: 0 0 2rem;
+  }
+
+  /* Footer */
+  footer {
+    padding: 4rem 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--sub);
+  }
+  .footer-grid {
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  @media (max-width: 700px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+  .footer-grid h4 {
+    color: var(--fg);
+    font-size: 0.85rem;
+    margin: 0 0 1rem;
+  }
+  .footer-grid ul { list-style: none; margin: 0; padding: 0; }
+  .footer-grid li { margin-bottom: 0.6rem; }
+  .footer-grid a { text-decoration: none; }
+  .footer-grid a:hover { text-decoration: underline; }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-bottom .legal { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .footer-bottom a { text-decoration: none; }
+  .footer-bottom a:hover { text-decoration: underline; }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.in-view { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
-  <p>이동 중입니다&hellip; 자동으로 이동하지 않으면
-    <a href="http://jyvp.iptime.org:8890/">여기를 클릭하세요</a>.
-  </p>
+
+  <nav>
+    <a class="logo" href="#home">JYVP</a>
+    <div class="links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="visit" href="http://jyvp.iptime.org:8890/">사이트 방문</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <h1>Creative Engineer.<br>Problem Solver.</h1>
+    <p>미니멀함 속에 담긴 디테일. 코드와 디자인의 경계에서 아이디어를 만듭니다.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="http://jyvp.iptime.org:8890/">사이트 방문하기</a>
+      <a class="link-arrow" href="#work">프로젝트 보기 →</a>
+    </div>
+    <div class="scroll-hint"><span></span></div>
+  </section>
+
+  <section id="work">
+    <div class="eyebrow fade-in">Selected Work</div>
+    <h2 class="section-title fade-in">디테일에 집중한 프로젝트들</h2>
+    <div class="work-grid">
+      <div class="card c1"><div class="cat">Product Design</div><div class="title">Visionary Interface</div></div>
+      <div class="card c2"><div class="cat">Web Engineering</div><div class="title">Minimalist Ecosystem</div></div>
+      <div class="card c3"><div class="cat">Mobile App</div><div class="title">Seamless Connectivity</div></div>
+      <div class="card c4"><div class="cat">SaaS Platform</div><div class="title">Precision Tools</div></div>
+      <div class="card c5"><div class="cat">Audio Engineering</div><div class="title">Future of Sound</div></div>
+      <div class="card c6"><div class="cat">AI Integration</div><div class="title">Intelligent Workflow</div></div>
+    </div>
+  </section>
+
+  <section class="statement dark" id="about">
+    <h2 class="fade-in">완벽은 디테일에서 시작됩니다.</h2>
+    <p class="fade-in">미니멀한 인터페이스 뒤에는 수많은 고민과 반복이 있습니다. 보이지 않는 곳까지 정성을 다합니다.</p>
+  </section>
+
+  <section class="statement light">
+    <h2 class="fade-in">기술과 감성의 경계에서.</h2>
+    <p class="fade-in">기능적이면서도 감성적인 경험을 만듭니다. 코드 한 줄 한 줄이 하나의 표현입니다.</p>
+  </section>
+
+  <section class="closing" id="contact">
+    <h2 class="fade-in">더 알아보고 싶으신가요?</h2>
+    <a class="btn-primary fade-in" href="http://jyvp.iptime.org:8890/">사이트 방문하기</a>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Work</h4>
+        <ul>
+          <li><a href="#work">Featured</a></li>
+          <li><a href="#work">Case Studies</a></li>
+          <li><a href="#work">Experiments</a></li>
+          <li><a href="#work">Archives</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li>Web Development</li>
+          <li>UI/UX Design</li>
+          <li>Product Strategy</li>
+          <li>Consulting</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li>GitHub</li>
+          <li>LinkedIn</li>
+          <li>Twitter</li>
+          <li>Instagram</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li>Documentation</li>
+          <li>Tools</li>
+          <li>Newsletter</li>
+          <li>Blog</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 JYVP. All rights reserved.</span>
+      <div class="legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Site Map</a>
+      </div>
+      <span>Korea</span>
+    </div>
+  </footer>
+
   <script>
-    window.location.replace("http://jyvp.iptime.org:8890/");
+    var els = document.querySelectorAll('.fade-in, .card');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(function (el) { io.observe(el); });
   </script>
 </body>
 </html>
