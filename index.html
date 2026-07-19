@@ -221,6 +221,31 @@
     font-size: 1rem;
   }
 
+  /* Honors grid */
+  .honors-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 768px) { .honors-grid { grid-template-columns: 1fr; } }
+  .honor-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 1.5rem 1.75rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .honor-card.in-view { opacity: 1; transform: translateY(0); }
+  .honor-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .honor-title a { text-decoration: none; }
+  .honor-title a:hover { text-decoration: underline; }
+  .honor-meta { color: var(--sub); font-size: 0.85rem; margin-bottom: 0.5rem; }
+  .honor-desc { color: var(--sub); font-size: 0.85rem; line-height: 1.5; }
+
   /* Work grid */
   .work-grid {
     max-width: 1100px;
@@ -350,6 +375,7 @@
     <a class="logo" href="#home">JYVP</a>
     <div class="links">
       <a href="#history">History</a>
+      <a href="#honors">Honors</a>
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
@@ -372,20 +398,52 @@
     <h2 class="section-title fade-in">연도별 이력</h2>
     <div class="timeline">
       <div class="timeline-item fade-in">
-        <div class="timeline-year">1995</div>
-        <div class="timeline-desc">한양대학교 전자공학과</div>
+        <div class="timeline-year">1995.03 – 2000.02</div>
+        <div class="timeline-desc">한양대학교 전자공학부 학사</div>
       </div>
       <div class="timeline-item fade-in">
-        <div class="timeline-year">2000</div>
-        <div class="timeline-desc">한양대학교 전자공학과 대학원 입학</div>
+        <div class="timeline-year">2000.03 – 2002.02</div>
+        <div class="timeline-desc">한양대학교 전자공학과 석사</div>
       </div>
       <div class="timeline-item fade-in">
-        <div class="timeline-year">2002 – 2005</div>
+        <div class="timeline-year">2002.03 – 2005.07</div>
         <div class="timeline-desc">전문연구요원</div>
       </div>
       <div class="timeline-item fade-in">
-        <div class="timeline-year">2005</div>
-        <div class="timeline-desc">LG전자 입사</div>
+        <div class="timeline-year">2005.08 – 현재</div>
+        <div class="timeline-desc">LG전자</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="honors">
+    <div class="eyebrow fade-in">Honors &amp; Awards</div>
+    <h2 class="section-title fade-in">수상 및 인증 이력</h2>
+    <div class="honors-grid">
+      <div class="honor-card fade-in">
+        <div class="honor-title"><a href="https://social.lge.co.kr/newsroom/lg_sss_0328/" target="_blank" rel="noopener">LGE SW Security Specialist</a></div>
+        <div class="honor-meta">Issued by LGE · 2019.03</div>
+        <div class="honor-desc">Associated with LG Electronics</div>
+      </div>
+      <div class="honor-card fade-in">
+        <div class="honor-title">SW Programming Competency Certification</div>
+        <div class="honor-meta">Issued by LG Electronics · 2017.06</div>
+        <div class="honor-desc">LG Electronics' S/W certification</div>
+      </div>
+      <div class="honor-card fade-in">
+        <div class="honor-title">Java Programming Competency Certification</div>
+        <div class="honor-meta">Issued by LG Electronics · 2015.11</div>
+        <div class="honor-desc">LG Electronics' S/W certification</div>
+      </div>
+      <div class="honor-card fade-in">
+        <div class="honor-title">C Programming Competency Certification</div>
+        <div class="honor-meta">Issued by LG Electronics · 2015.03</div>
+        <div class="honor-desc">LG Electronics' S/W certification</div>
+      </div>
+      <div class="honor-card fade-in">
+        <div class="honor-title"><a href="https://news.naver.com/main/read.nhn?mode=LSD&mid=sec&sid1=101&oid=001&aid=0005664229" target="_blank" rel="noopener">LGE Coding Expert</a></div>
+        <div class="honor-meta">Issued by LGE · 2012.06</div>
+        <div class="honor-desc">Associated with LG Electronics</div>
       </div>
     </div>
   </section>
@@ -469,7 +527,7 @@
   </footer>
 
   <script>
-    var els = document.querySelectorAll('.fade-in, .card, .timeline-item');
+    var els = document.querySelectorAll('.fade-in, .card, .timeline-item, .honor-card');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
